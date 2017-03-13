@@ -1,0 +1,14 @@
+{
+  "name": "waend-map",
+  "version": "1.0.0",
+  "description": "waend map",
+  "main": "js/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pierre Marchand",
+  "license": "AGPL-3.0",
+  "devDependencies": {
+    "@types/node": "^7.0.8"
+  }
+}
