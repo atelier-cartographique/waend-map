@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "waend map",
   "main": "js/index",
+  "typings": "js/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
