@@ -5,9 +5,6 @@ import * as debug from 'debug';
 const logger = debug('waend:Source');
 
 
-const binder = getBinder();
-
-
 
 class Source extends BaseSource<Feature> {
     readonly id: string;
@@ -54,7 +51,7 @@ class Source extends BaseSource<Feature> {
                 this.emit('update');
             };
 
-        binder.getFeatures(this.uid, this.gid, this.id)
+        getBinder().getFeatures(this.uid, this.gid, this.id)
             .then(updateWithFeatures)
             .catch(err => {
                 logger('Source.update', err);
