@@ -5,7 +5,6 @@ const waend_lib_1 = require("waend-lib");
 const waend_shell_1 = require("waend-shell");
 const debug = require("debug");
 const logger = debug('waend:Source');
-const binder = waend_shell_1.getBinder();
 class Source extends waend_lib_1.BaseSource {
     constructor(uid, gid, layer) {
         super();
@@ -37,7 +36,7 @@ class Source extends waend_lib_1.BaseSource {
             this.buildTree();
             this.emit('update');
         };
-        binder.getFeatures(this.uid, this.gid, this.id)
+        waend_shell_1.getBinder().getFeatures(this.uid, this.gid, this.id)
             .then(updateWithFeatures)
             .catch(err => {
             logger('Source.update', err);
