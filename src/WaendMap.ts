@@ -13,7 +13,7 @@
 
 import * as _ from 'lodash';
 
-import { Proj, InterfaceProjection } from 'proj4';
+import proj4 from 'proj4';
 import { Extent, Feature } from 'waend-lib';
 import { semaphore, region } from 'waend-shell';
 import Renderer from './Renderer';
@@ -31,10 +31,10 @@ export default class WaendMap {
     private defaultProgramUrl: string;
     private view: View;
     private renderers: { [id: string]: Renderer };
-    private projection: InterfaceProjection;
+    private projection: proj4.InterfaceProjection;
 
     constructor(options: MapOptions) {
-        this.projection = Proj(options.projection || 'EPSG:3857');
+        this.projection = proj4.Proj(options.projection || 'EPSG:3857');
         this.renderers = {};
 
         const vo: ViewOptions = {

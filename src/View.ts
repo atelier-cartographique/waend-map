@@ -12,7 +12,7 @@
 
 
 import * as _ from 'lodash';
-import { InterfaceProjection } from 'proj4';
+import proj4 from 'proj4';
 import { Transform, Extent, Feature } from 'waend-lib';
 import { dom } from "waend-util";
 import { semaphore, Region } from 'waend-shell';
@@ -149,7 +149,7 @@ export default class View {
         this.transform.reset(t);
     }
 
-    getGeoExtent(projection: InterfaceProjection) {
+    getGeoExtent(projection: proj4.InterfaceProjection) {
         const pWorld = Region.getWorldExtent().getCoordinates();
         const minPWorld = projection.forward([pWorld[0], pWorld[1]]);
         const maxPWorld = projection.forward([pWorld[2], pWorld[3]]);

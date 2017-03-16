@@ -8,7 +8,7 @@ const Renderer_1 = require("./Renderer");
 const View_1 = require("./View");
 class WaendMap {
     constructor(options) {
-        this.projection = proj4_1.Proj(options.projection || 'EPSG:3857');
+        this.projection = proj4_1.default.Proj(options.projection || 'EPSG:3857');
         this.renderers = {};
         const vo = {
             map: this,

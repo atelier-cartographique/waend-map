@@ -5,13 +5,13 @@ import { Proj3857 } from 'waend-util';
 import Painter from './Painter';
 import Source from './Source';
 import View from "./View";
-import { InterfaceProjection } from "proj4";
+import proj4 from "proj4";
 
 
 export interface RendererOptions {
     source: Source;
     view: View;
-    projection: InterfaceProjection;
+    projection: proj4.InterfaceProjection;
     defaultProgramUrl: string;
 }
 
@@ -24,7 +24,7 @@ class CanvasRenderer {
     readonly id: string;
     private painter: Painter;
     private visible: boolean;
-    private proj: InterfaceProjection;
+    private proj: proj4.InterfaceProjection;
     private view: View;
     private source: Source;
     private features: { [propName: string]: Feature };

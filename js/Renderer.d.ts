@@ -2,11 +2,11 @@
 import { PainterCommand } from 'waend-lib';
 import Source from './Source';
 import View from "./View";
-import { InterfaceProjection } from "proj4";
+import proj4 from "proj4";
 export interface RendererOptions {
     source: Source;
     view: View;
-    projection: InterfaceProjection;
+    projection: proj4.InterfaceProjection;
     defaultProgramUrl: string;
 }
 declare class CanvasRenderer {

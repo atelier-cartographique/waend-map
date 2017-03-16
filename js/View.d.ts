@@ -1,6 +1,6 @@
 /// <reference types="proj4" />
 /// <reference types="rbush" />
-import { InterfaceProjection } from 'proj4';
+import proj4 from 'proj4';
 import { Transform, Extent, Feature } from 'waend-lib';
 import Navigator from './Navigator';
 import WaendMap from './WaendMap';
@@ -33,7 +33,7 @@ export default class View {
     scale(sx: number, sy: number): this;
     setExtent(extent: Extent): void;
     setTransform(): void;
-    getGeoExtent(projection: InterfaceProjection): number[];
+    getGeoExtent(projection: proj4.InterfaceProjection): number[];
     getProjectedPointOnView(x: number, y: number): number[];
     getViewPointProjected(x: number, y: number): number[];
     getLayer(layerId: string): Source | null;
