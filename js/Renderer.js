@@ -13,7 +13,12 @@ class CanvasRenderer {
         this.proj = options.projection;
         this.defaultProgramUrl = options.defaultProgramUrl;
         this.visible = true;
-        this.painter = new Painter_1.default(this.view, this.source.id, options.defaultProgramUrl);
+        this.painter = new Painter_1.default({
+            view: this.view,
+            layerId: this.source.id,
+            defaultProgramUrl: options.defaultProgramUrl,
+            mediaUrl: options.mediaUrl,
+        });
         this.initWorker();
         this.features = {};
         waend_shell_1.semaphore.on('map:update', this.render.bind(this));

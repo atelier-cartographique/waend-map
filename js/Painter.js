@@ -6,11 +6,12 @@ const waend_util_1 = require("waend-util");
 const Image_1 = require("./Image");
 const { CANVAS } = waend_util_1.dom;
 class Painter {
-    constructor(view, mediaUrl, layerId) {
-        this.view = view;
-        this.mediaUrl = mediaUrl;
+    constructor(options) {
         this.hasContext = false;
-        const baseContext = view.getContext(layerId);
+        this.view = options.view;
+        this.mediaUrl = options.mediaUrl;
+        this.defaultProgramUrl = options.defaultProgramUrl;
+        const baseContext = this.view.getContext(options.layerId);
         if (baseContext) {
             this.hasContext = true;
             let currentContext = baseContext;
@@ -25,11 +26,11 @@ class Painter {
             this.restoreContext = () => {
                 currentContext = baseContext;
             };
-            this.transform = view.transform.clone();
-            waend_shell_1.semaphore.on('view:change', this.resetTransform.bind(this));
+            this.transform = this.view.transform.clone();
             this.stateInc = 0;
             this.imagesLoading = [];
             this.clear();
+            waend_shell_1.semaphore.on('view:change', this.resetTransform.bind(this));
         }
     }
     getMediaUrl() {

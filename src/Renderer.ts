@@ -12,6 +12,7 @@ export interface RendererOptions {
     source: Source;
     view: View;
     projection: proj4.InterfaceProjection;
+    mediaUrl: string;
     defaultProgramUrl: string;
 }
 
@@ -38,7 +39,12 @@ class CanvasRenderer {
         this.proj = options.projection;
         this.defaultProgramUrl = options.defaultProgramUrl;
         this.visible = true;
-        this.painter = new Painter(this.view, this.source.id, options.defaultProgramUrl);
+        this.painter = new Painter({
+            view: this.view,
+            layerId: this.source.id,
+            defaultProgramUrl: options.defaultProgramUrl,
+            mediaUrl: options.mediaUrl,
+        });
         this.initWorker();
         this.features = {};
 

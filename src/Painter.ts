@@ -17,6 +17,13 @@ import View, { Context } from './View';
 
 const { CANVAS } = dom;
 
+export interface PainterOptions {
+    view: View;
+    layerId: string;
+    mediaUrl: string;
+    defaultProgramUrl: string;
+}
+
 interface TextureRecord {
     canvas: HTMLCanvasElement,
     context: Context;
@@ -24,6 +31,9 @@ interface TextureRecord {
 
 
 class Painter {
+    private view: View;
+    private mediaUrl: string;
+    private defaultProgramUrl: string;
     protected hasContext = false;
     private imagesLoading: ImageLoader[];
     private stateInc: number;
@@ -32,8 +42,11 @@ class Painter {
     private textures: { [id: string]: TextureRecord };
     context: Context;
 
-    constructor(private view: View, private mediaUrl: string, layerId: string) {
-        const baseContext = view.getContext(layerId);
+    constructor(options: PainterOptions) {
+        this.view = options.view;
+        this.mediaUrl = options.mediaUrl;
+        this.defaultProgramUrl = options.defaultProgramUrl;
+        const baseContext = this.view.getContext(options.layerId);
         if (baseContext) {
             this.hasContext = true;
             let currentContext: Context = baseContext;
@@ -52,11 +65,11 @@ class Painter {
                 currentContext = baseContext;
             };
 
-            this.transform = view.transform.clone();
-            semaphore.on('view:change', this.resetTransform.bind(this));
+            this.transform = this.view.transform.clone();
             this.stateInc = 0;
             this.imagesLoading = [];
             this.clear();
+            semaphore.on('view:change', this.resetTransform.bind(this));
         }
 
     }

@@ -5,10 +5,12 @@ import Source from './Source';
 export interface MapOptions {
     root: Element;
     defaultProgramUrl: string;
+    mediaUrl: string;
     projection?: string;
     extent?: Extent;
 }
 export default class WaendMap {
+    private mediaUrl;
     private defaultProgramUrl;
     private view;
     private renderers;

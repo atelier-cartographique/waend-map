@@ -7,6 +7,7 @@ export interface RendererOptions {
     source: Source;
     view: View;
     projection: proj4.InterfaceProjection;
+    mediaUrl: string;
     defaultProgramUrl: string;
 }
 declare class CanvasRenderer {

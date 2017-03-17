@@ -1,8 +1,15 @@
 import { CoordLinestring, CoordPolygon, ContextValue, DrawingInstruction, PainterCommand, ImageOptions } from 'waend-lib';
 import View, { Context } from './View';
+export interface PainterOptions {
+    view: View;
+    layerId: string;
+    mediaUrl: string;
+    defaultProgramUrl: string;
+}
 declare class Painter {
     private view;
     private mediaUrl;
+    private defaultProgramUrl;
     protected hasContext: boolean;
     private imagesLoading;
     private stateInc;
@@ -10,7 +17,7 @@ declare class Painter {
     private restoreContext;
     private textures;
     context: Context;
-    constructor(view: View, mediaUrl: string, layerId: string);
+    constructor(options: PainterOptions);
     getMediaUrl(): string;
     setTransform(a: number, b: number, c: number, d: number, e: number, f: number): void;
     resetTransform(): void;

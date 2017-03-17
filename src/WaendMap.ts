@@ -23,11 +23,13 @@ import Source from './Source';
 export interface MapOptions {
     root: Element;
     defaultProgramUrl: string;
+    mediaUrl: string;
     projection?: string;
     extent?: Extent;
 }
 
 export default class WaendMap {
+    private mediaUrl: string;
     private defaultProgramUrl: string;
     private view: View;
     private renderers: { [id: string]: Renderer };
@@ -37,6 +39,7 @@ export default class WaendMap {
         this.projection = proj4.Proj(options.projection || 'EPSG:3857');
         this.renderers = {};
         this.defaultProgramUrl = options.defaultProgramUrl;
+        this.mediaUrl = options.mediaUrl;
 
         const vo: ViewOptions = {
             map: this,
@@ -114,6 +117,7 @@ export default class WaendMap {
             view: this.view,
             projection: this.projection,
             defaultProgramUrl: this.defaultProgramUrl,
+            mediaUrl: this.mediaUrl,
         });
 
         this.renderers[source.id] = renderer;
