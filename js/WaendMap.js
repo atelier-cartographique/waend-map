@@ -10,6 +10,7 @@ class WaendMap {
     constructor(options) {
         this.projection = proj4_1.default.Proj(options.projection || 'EPSG:3857');
         this.renderers = {};
+        this.defaultProgramUrl = options.defaultProgramUrl;
         const vo = {
             map: this,
             extent: this.projectedExtent(options.extent || waend_shell_1.region.get()),

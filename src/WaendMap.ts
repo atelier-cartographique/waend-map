@@ -36,6 +36,7 @@ export default class WaendMap {
     constructor(options: MapOptions) {
         this.projection = proj4.Proj(options.projection || 'EPSG:3857');
         this.renderers = {};
+        this.defaultProgramUrl = options.defaultProgramUrl;
 
         const vo: ViewOptions = {
             map: this,
