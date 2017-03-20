@@ -8,6 +8,7 @@ const Painter_1 = require("./Painter");
 class CanvasRenderer {
     constructor(options) {
         this.id = _.uniqueId();
+        this.frameId = 'none';
         this.source = options.source;
         this.view = options.view;
         this.proj = options.projection;
@@ -21,6 +22,11 @@ class CanvasRenderer {
         });
         this.initWorker();
         this.features = {};
+        this.worker.on('frame', (id, commands) => {
+            if (id === this.frameId) {
+                this.painter.processCommands(commands);
+            }
+        });
         waend_shell_1.semaphore.on('map:update', this.render.bind(this));
     }
     setVisibility(v) {
@@ -87,11 +93,6 @@ class CanvasRenderer {
         painter.set('fillStyle', '#FFF');
         painter.drawPolygon(coordinates, ['closePath', 'stroke', 'fill']);
         painter.restore();
-    }
-    dispatch(id, commands) {
-        if (id === this.frameId) {
-            this.painter.processCommands(commands);
-        }
     }
     render() {
         if (!this.isVisible()) {

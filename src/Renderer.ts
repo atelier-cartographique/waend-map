@@ -34,6 +34,7 @@ class CanvasRenderer {
 
     constructor(options: RendererOptions) {
         this.id = _.uniqueId();
+        this.frameId = 'none';
         this.source = options.source;
         this.view = options.view;
         this.proj = options.projection;
@@ -48,6 +49,12 @@ class CanvasRenderer {
         this.initWorker();
         this.features = {};
 
+        this.worker.on('frame',
+            (id: string, commands: PainterCommand[]) => {
+                if (id === this.frameId) {
+                    this.painter.processCommands(commands);
+                }
+            });
         semaphore.on('map:update', this.render.bind(this));
     }
 
@@ -136,12 +143,6 @@ class CanvasRenderer {
         painter.set('fillStyle', '#FFF');
         painter.drawPolygon(coordinates, ['closePath', 'stroke', 'fill']);
         painter.restore();
-    }
-
-    dispatch(id: string, commands: PainterCommand[]) {
-        if (id === this.frameId) {
-            this.painter.processCommands(commands);
-        }
     }
 
     render() {

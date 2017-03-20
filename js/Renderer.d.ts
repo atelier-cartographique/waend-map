@@ -1,5 +1,4 @@
 /// <reference types="proj4" />
-import { PainterCommand } from 'waend-lib';
 import Source from './Source';
 import View from "./View";
 import proj4 from "proj4";
@@ -29,7 +28,6 @@ declare class CanvasRenderer {
     getNewFrameId(): string;
     initWorker(): void;
     drawBackround(): void;
-    dispatch(id: string, commands: PainterCommand[]): void;
     render(): void;
     stop(): void;
 }
