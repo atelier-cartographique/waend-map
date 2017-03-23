@@ -72,8 +72,8 @@ class CanvasRenderer {
 
     initWorker() {
         const layer = this.source.layer;
-        this.worker = new WaendWorker(
-            layer.get('program', this.defaultProgramUrl));
+        const programUrl = layer.get('program', this.defaultProgramUrl);
+        this.worker = new WaendWorker(`${programUrl}?l=${this.source.id}`);
         this.worker.start();
 
         this.source.on('update',

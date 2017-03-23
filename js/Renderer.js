@@ -40,7 +40,8 @@ class CanvasRenderer {
     }
     initWorker() {
         const layer = this.source.layer;
-        this.worker = new waend_lib_1.WaendWorker(layer.get('program', this.defaultProgramUrl));
+        const programUrl = layer.get('program', this.defaultProgramUrl);
+        this.worker = new waend_lib_1.WaendWorker(`${programUrl}?l=${this.source.id}`);
         this.worker.start();
         this.source.on('update', () => {
             const ack = _.uniqueId('ack.');
