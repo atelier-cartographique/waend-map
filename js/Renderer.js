@@ -107,6 +107,12 @@ class CanvasRenderer {
         const worker = this.worker;
         const extent = this.view.getGeoExtent(this.proj);
         const transform = this.view.transform.flatMatrix();
+        if (this.frameId) {
+            worker.post({
+                name: waend_lib_1.EventCancelFrame,
+                id: this.frameId,
+            });
+        }
         this.painter.clear();
         this.frameId = this.getNewFrameId();
         worker.post({

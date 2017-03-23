@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { semaphore, Region } from 'waend-shell';
-import { Feature, WaendWorker, PainterCommand, EventRenderFrame, EventRenderInit, EventRenderUpdate } from 'waend-lib';
+import { Feature, WaendWorker, PainterCommand, EventRenderFrame, EventCancelFrame, EventRenderInit, EventRenderUpdate } from 'waend-lib';
 import { Proj3857 } from 'waend-util';
 import Painter from './Painter';
 import Source from './Source';
@@ -158,6 +158,13 @@ class CanvasRenderer {
         const worker = this.worker;
         const extent = this.view.getGeoExtent(this.proj);
         const transform = this.view.transform.flatMatrix();
+
+        if (this.frameId) {
+            worker.post({
+                name: EventCancelFrame,
+                id: this.frameId,
+            });
+        }
 
         this.painter.clear();
 
