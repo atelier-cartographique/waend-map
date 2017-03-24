@@ -276,13 +276,9 @@ class Navigator {
         const ctx = this.context;
         const rect = this.canvas.getBoundingClientRect();
         const extent = waend_shell_1.region.get();
-        let bl = extent.getBottomLeft().getCoordinates();
-        let tr = extent.getTopRight().getCoordinates();
-        const centerLatLong = extent.getCenter().getCoordinates();
-        let center;
-        bl = waend_util_1.Proj3857.forward(bl);
-        tr = waend_util_1.Proj3857.forward(tr);
-        center = waend_util_1.Proj3857.forward(centerLatLong);
+        const bl = waend_util_1.pointProject(extent.getBottomLeft().getCoordinates());
+        const tr = waend_util_1.pointProject(extent.getTopRight().getCoordinates());
+        const center = waend_util_1.pointProject(extent.getCenter().getCoordinates());
         this.transform.mapVec2(bl);
         this.transform.mapVec2(tr);
         this.transform.mapVec2(center);

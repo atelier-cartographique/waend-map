@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import { semaphore, Region } from 'waend-shell';
 import { Feature, WaendWorker, PainterCommand, EventRenderFrame, EventCancelFrame, EventRenderInit, EventRenderUpdate } from 'waend-lib';
-import { Proj3857 } from 'waend-util';
+import { pointProject } from 'waend-util';
 import Painter from './Painter';
 import Source from './Source';
 import View from "./View";
@@ -130,10 +130,10 @@ class CanvasRenderer {
         let bl = we.getBottomLeft().getCoordinates();
         const trans = this.view.transform.clone();
 
-        tl = trans.mapVec2(Proj3857.forward(tl));
-        tr = trans.mapVec2(Proj3857.forward(tr));
-        br = trans.mapVec2(Proj3857.forward(br));
-        bl = trans.mapVec2(Proj3857.forward(bl));
+        tl = trans.mapVec2(pointProject(tl));
+        tr = trans.mapVec2(pointProject(tr));
+        br = trans.mapVec2(pointProject(br));
+        bl = trans.mapVec2(pointProject(bl));
 
         const coordinates = [[tl, tr, br, bl]];
 
@@ -156,7 +156,7 @@ class CanvasRenderer {
         }
 
         const worker = this.worker;
-        const extent = this.view.getGeoExtent(this.proj);
+        const extent = this.view.getGeoExtent();
         const transform = this.view.transform.flatMatrix();
 
         if (this.frameId) {

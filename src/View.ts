@@ -12,9 +12,8 @@
 
 
 import * as _ from 'lodash';
-import proj4 from 'proj4';
 import { Transform, Extent, Feature } from 'waend-lib';
-import { dom } from "waend-util";
+import { dom, pointProject, pointUnproject } from "waend-util";
 import { semaphore, Region } from 'waend-shell';
 import Navigator from './Navigator';
 import WaendMap from './WaendMap';
@@ -149,15 +148,15 @@ export default class View {
         this.transform.reset(t);
     }
 
-    getGeoExtent(projection: proj4.InterfaceProjection) {
+    getGeoExtent() {
         const pWorld = Region.getWorldExtent().getCoordinates();
-        const minPWorld = projection.forward([pWorld[0], pWorld[1]]);
-        const maxPWorld = projection.forward([pWorld[2], pWorld[3]]);
+        const minPWorld = pointProject([pWorld[0], pWorld[1]]);
+        const maxPWorld = pointProject([pWorld[2], pWorld[3]]);
         const pExtent = this.extent.bound(minPWorld.concat(maxPWorld));
         const projectedMin = pExtent.getBottomLeft().getCoordinates();
         const projectedMax = pExtent.getTopRight().getCoordinates();
-        const min = projection.inverse(projectedMin);
-        const max = projection.inverse(projectedMax);
+        const min = pointUnproject(projectedMin);
+        const max = pointUnproject(projectedMax);
         return min.concat(max);
     }
 
