@@ -83,10 +83,10 @@ class CanvasRenderer {
         let br = we.getBottomRight().getCoordinates();
         let bl = we.getBottomLeft().getCoordinates();
         const trans = this.view.transform.clone();
-        tl = trans.mapVec2(waend_util_1.Proj3857.forward(tl));
-        tr = trans.mapVec2(waend_util_1.Proj3857.forward(tr));
-        br = trans.mapVec2(waend_util_1.Proj3857.forward(br));
-        bl = trans.mapVec2(waend_util_1.Proj3857.forward(bl));
+        tl = trans.mapVec2(waend_util_1.pointProject(tl));
+        tr = trans.mapVec2(waend_util_1.pointProject(tr));
+        br = trans.mapVec2(waend_util_1.pointProject(br));
+        bl = trans.mapVec2(waend_util_1.pointProject(bl));
         const coordinates = [[tl, tr, br, bl]];
         painter.save();
         painter.set('strokeStyle', '#888');
@@ -105,7 +105,7 @@ class CanvasRenderer {
             return;
         }
         const worker = this.worker;
-        const extent = this.view.getGeoExtent(this.proj);
+        const extent = this.view.getGeoExtent();
         const transform = this.view.transform.flatMatrix();
         if (this.frameId) {
             worker.post({

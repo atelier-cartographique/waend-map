@@ -6,6 +6,7 @@ const waend_lib_1 = require("waend-lib");
 const waend_shell_1 = require("waend-shell");
 const Renderer_1 = require("./Renderer");
 const View_1 = require("./View");
+const waend_util_1 = require("waend-util");
 class WaendMap {
     constructor(options) {
         this.projection = proj4_1.default.Proj(options.projection || 'EPSG:3857');
@@ -30,8 +31,8 @@ class WaendMap {
     unlistenToWaend() {
     }
     projectedExtent(extent) {
-        const bl = this.projection.forward(extent.getBottomLeft().getCoordinates());
-        const tr = this.projection.forward(extent.getTopRight().getCoordinates());
+        const bl = waend_util_1.pointProject(extent.getBottomLeft().getCoordinates());
+        const tr = waend_util_1.pointProject(extent.getTopRight().getCoordinates());
         const pr = [bl[0], bl[1], tr[0], tr[1]];
         return new waend_lib_1.Extent(pr);
     }
@@ -84,11 +85,11 @@ class WaendMap {
         const v = Array.from(pixel);
         const inverse = this.view.transform.inverse();
         const tv = inverse.mapVec2(v);
-        return this.projection.inverse(tv);
+        return waend_util_1.pointUnproject(tv);
     }
     getPixelFromCoordinate(coord) {
         const v = Array.from(coord);
-        const pv = this.projection.forward(v);
+        const pv = waend_util_1.pointProject(v);
         const tv = this.view.transform.mapVec2(pv);
         return tv;
     }

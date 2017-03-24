@@ -1,4 +1,3 @@
-/// <reference types="proj4" />
 import Source from './Source';
 import View from "./View";
 import proj4 from "proj4";

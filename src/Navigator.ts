@@ -33,7 +33,7 @@ import * as debug from 'debug';
 import View from "./View";
 import WaendMap from "./WaendMap";
 
-import { Proj3857, vecDist, dom } from 'waend-util';
+import { pointProject, vecDist, dom } from 'waend-util';
 
 const { isKeyCode, KeyCode, CANVAS } = dom;
 const logger = debug('waend:Navigator');
@@ -374,14 +374,10 @@ export class Navigator {
         const ctx = this.context;
         const rect = this.canvas.getBoundingClientRect();
         const extent = region.get();
-        let bl = extent.getBottomLeft().getCoordinates();
-        let tr = extent.getTopRight().getCoordinates();
-        const centerLatLong = extent.getCenter().getCoordinates();
-        let center;
+        const bl = pointProject(extent.getBottomLeft().getCoordinates());
+        const tr = pointProject(extent.getTopRight().getCoordinates());
+        const center = pointProject(extent.getCenter().getCoordinates());
 
-        bl = Proj3857.forward(bl);
-        tr = Proj3857.forward(tr);
-        center = Proj3857.forward(centerLatLong);
         this.transform.mapVec2(bl);
         this.transform.mapVec2(tr);
         this.transform.mapVec2(center);

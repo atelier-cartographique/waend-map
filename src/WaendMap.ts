@@ -33,6 +33,7 @@ import { semaphore, region } from 'waend-shell';
 import Renderer from './Renderer';
 import View, { ViewOptions } from './View';
 import Source from './Source';
+import { pointProject, pointUnproject } from "waend-util";
 
 export interface MapOptions {
     root: Element;
@@ -83,9 +84,9 @@ export default class WaendMap {
     }
 
     projectedExtent(extent: Extent) {
-        const bl = this.projection.forward(
+        const bl = pointProject(
             extent.getBottomLeft().getCoordinates());
-        const tr = this.projection.forward(
+        const tr = pointProject(
             extent.getTopRight().getCoordinates());
         const pr = [bl[0], bl[1], tr[0], tr[1]];
         return new Extent(pr);
@@ -149,12 +150,12 @@ export default class WaendMap {
         const inverse = this.view.transform.inverse();
         const tv = inverse.mapVec2(v);
         // logger('map.getCoordinateFromPixel', v, inverse.flatMatrix(), tv);
-        return this.projection.inverse(tv);
+        return pointUnproject(tv);
     }
 
     getPixelFromCoordinate(coord: number[]) {
         const v = Array.from(coord);
-        const pv = this.projection.forward(v);
+        const pv = pointProject(v);
         const tv = this.view.transform.mapVec2(pv);
         return tv;
     }

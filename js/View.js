@@ -91,15 +91,15 @@ class View {
         t.scale(s, -s, axis);
         this.transform.reset(t);
     }
-    getGeoExtent(projection) {
+    getGeoExtent() {
         const pWorld = waend_shell_1.Region.getWorldExtent().getCoordinates();
-        const minPWorld = projection.forward([pWorld[0], pWorld[1]]);
-        const maxPWorld = projection.forward([pWorld[2], pWorld[3]]);
+        const minPWorld = waend_util_1.pointProject([pWorld[0], pWorld[1]]);
+        const maxPWorld = waend_util_1.pointProject([pWorld[2], pWorld[3]]);
         const pExtent = this.extent.bound(minPWorld.concat(maxPWorld));
         const projectedMin = pExtent.getBottomLeft().getCoordinates();
         const projectedMax = pExtent.getTopRight().getCoordinates();
-        const min = projection.inverse(projectedMin);
-        const max = projection.inverse(projectedMax);
+        const min = waend_util_1.pointUnproject(projectedMin);
+        const max = waend_util_1.pointUnproject(projectedMax);
         return min.concat(max);
     }
     getProjectedPointOnView(x, y) {
