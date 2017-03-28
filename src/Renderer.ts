@@ -29,13 +29,11 @@ import { pointProject } from 'waend-util';
 import Painter from './Painter';
 import Source from './Source';
 import View from "./View";
-import proj4 from "proj4";
 
 
 export interface RendererOptions {
     source: Source;
     view: View;
-    projection: proj4.InterfaceProjection;
     mediaUrl: string;
     defaultProgramUrl: string;
 }
@@ -49,7 +47,6 @@ class CanvasRenderer {
     readonly id: string;
     private painter: Painter;
     private visible: boolean;
-    private proj: proj4.InterfaceProjection;
     private view: View;
     private source: Source;
     private features: { [propName: string]: Feature };
@@ -61,7 +58,6 @@ class CanvasRenderer {
         this.frameId = 'none';
         this.source = options.source;
         this.view = options.view;
-        this.proj = options.projection;
         this.defaultProgramUrl = options.defaultProgramUrl;
         this.visible = true;
         this.painter = new Painter({

@@ -14,7 +14,6 @@ export default class WaendMap {
     private defaultProgramUrl;
     private view;
     private renderers;
-    private projection;
     constructor(options: MapOptions);
     listenToWaend(): void;
     unlistenToWaend(): void;

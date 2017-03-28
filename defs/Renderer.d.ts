@@ -1,10 +1,8 @@
 import Source from './Source';
 import View from "./View";
-import proj4 from "proj4";
 export interface RendererOptions {
     source: Source;
     view: View;
-    projection: proj4.InterfaceProjection;
     mediaUrl: string;
     defaultProgramUrl: string;
 }
@@ -15,7 +13,6 @@ declare class CanvasRenderer {
     readonly id: string;
     private painter;
     private visible;
-    private proj;
     private view;
     private source;
     private features;

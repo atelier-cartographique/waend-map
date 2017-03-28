@@ -12,7 +12,6 @@
   "license": "AGPL-3.0",
   "dependencies": {
     "@types/node": "^7.0.8",
-    "proj4": "github:atelier-cartographique/proj4js#typescript-definitions",
     "waend-shell": "github:atelier-cartographique/waend-shell",
     "waend-util": "github:atelier-cartographique/waend-util"
   }

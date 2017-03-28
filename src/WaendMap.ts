@@ -26,8 +26,6 @@
 
 
 import * as _ from 'lodash';
-
-import proj4 from 'proj4';
 import { Extent, Feature } from 'waend-lib';
 import { semaphore, region } from 'waend-shell';
 import Renderer from './Renderer';
@@ -48,10 +46,8 @@ export default class WaendMap {
     private defaultProgramUrl: string;
     private view: View;
     private renderers: { [id: string]: Renderer };
-    private projection: proj4.InterfaceProjection;
 
     constructor(options: MapOptions) {
-        this.projection = proj4.Proj(options.projection || 'EPSG:3857');
         this.renderers = {};
         this.defaultProgramUrl = options.defaultProgramUrl;
         this.mediaUrl = options.mediaUrl;
@@ -130,7 +126,6 @@ export default class WaendMap {
         const renderer = new Renderer({
             source,
             view: this.view,
-            projection: this.projection,
             defaultProgramUrl: this.defaultProgramUrl,
             mediaUrl: this.mediaUrl,
         });
