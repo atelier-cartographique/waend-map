@@ -132,7 +132,7 @@ export default class WaendMap {
     }
 
     getCoordinateFromPixel(pixel: number[]) {
-        const v = Array.from(pixel);
+        const v = [pixel[0], pixel[1]];
         const inverse = this.view.transform.inverse();
         const tv = inverse.mapVec2(v);
         // logger('map.getCoordinateFromPixel', v, inverse.flatMatrix(), tv);
@@ -140,7 +140,7 @@ export default class WaendMap {
     }
 
     getPixelFromCoordinate(coord: number[]) {
-        const v = Array.from(coord);
+        const v = [coord[0], coord[1]];
         const pv = pointProject(v);
         const tv = this.view.transform.mapVec2(pv);
         return tv;
