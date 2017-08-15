@@ -174,7 +174,7 @@ class Painter {
                     ctx.miterLimit = <number>value;
                     break;
                 case 'msFillRule':
-                    ctx.msFillRule = <string>value;
+                    ctx.msFillRule = <CanvasFillRule>value;
                     break;
                 case 'shadowBlur':
                     ctx.shadowBlur = <number>value;
